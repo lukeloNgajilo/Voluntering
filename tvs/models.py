@@ -20,6 +20,35 @@ def validate_file_extension(value):
         raise ValidationError('Unsupported file extension, Only PDF or DOCX allowed.')
 
 
+class Regions(models.Model):
+    RegionCode = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+         return self.name
+
+class Council(models.Model):
+    name = models.CharField(max_length=20 ,default="none")
+    CouncilCode = models.IntegerField(primary_key=True)
+    Regions = models.ForeignKey(Regions,on_delete=models.CASCADE)
+
+    def __str__(self):
+         return self.name
+
+class Ward(models.Model):
+      name = models.CharField(max_length=20)
+      WardCode = models.IntegerField(primary_key=True)
+      Council = models.ForeignKey(Council,on_delete=models.CASCADE)
+
+      def __str__(self):
+            return self.name
+
+class School(models.Model):
+    name = models.CharField(max_length=20)
+    ward = models.ForeignKey(Ward,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 # Volunteer details on Applying
 class Volunteer(models.Model):
@@ -39,8 +68,21 @@ class Volunteer(models.Model):
     education = models.CharField(max_length=20, choices=CERT,default='None',null = True)
     school = models.CharField(max_length=100,blank=True,default='None')
     ward = models.CharField(max_length=150,blank=True,default='Dar Es Salaam')
+    city1 = models.ForeignKey(Regions, on_delete=models.CASCADE, related_name='city', null=True)
+    council1 = models.ForeignKey(Council, on_delete=models.CASCADE, related_name='council', null=True)
+    ward1 = models.ForeignKey(Ward, on_delete=models.CASCADE, related_name='ward', null=True)
+    School1 = models.ForeignKey(School, on_delete=models.CASCADE, related_name='school45', null=True)
+    city2 = models.ForeignKey(Regions, on_delete=models.CASCADE, related_name='city1', null=True)
+    council2 = models.ForeignKey(Council, on_delete=models.CASCADE, related_name='council1', null=True)
+    School2 = models.ForeignKey(School, on_delete=models.CASCADE, related_name='school1', null=True)
+    ward2 = models.ForeignKey(Ward, on_delete=models.CASCADE, related_name='ward1', null=True)
+    city3 = models.ForeignKey(Regions, on_delete=models.CASCADE, related_name='city2', null=True)
+    council3 = models.ForeignKey(Council, on_delete=models.CASCADE, related_name='council2', null=True)
+    ward3 = models.ForeignKey(Ward, on_delete=models.CASCADE, related_name='ward2', null=True)
+    School3 = models.ForeignKey(School, on_delete=models.CASCADE, related_name='school2', null=True)
 
-
+    def __str__(self):
+        return self.full_name
 # files to upload for chart population
 class Upload(models.Model):
     year_validator = RegexValidator(regex=r'^[0-9]+$', message="Only numbers are allowed")

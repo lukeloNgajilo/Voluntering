@@ -14,7 +14,7 @@ from sklearn.linear_model import LinearRegression
 from pyresparser import ResumeParser
 from django.core.exceptions import ValidationError
 from django.contrib import messages
-
+from tvs.models import *
 from tvs import models as models
 # class to return data for visual
 from tvs.datatype import PtrDetails, UserStatusDetail, ToMap1
@@ -23,7 +23,8 @@ from .forms import UserForm, CVUpload, UserMoreInfo, UploadData, VolunteerApply,
 from tvs import admin
 from django.db.models import Value,Max
 from haversine import haversine
-
+import json
+from django.core import serializers
 # Create your views here.
 
 #loop = asyncio.get_event_loop()
@@ -461,7 +462,7 @@ def apply(request):
 
     #get resume file data
     # the following could be better
-    # users = models.Users.objects.raw('SELECT resume FROM tvs_users WHERE username = %s',[name])
+    users = models.Users.objects.raw('SELECT resume FROM tvs_users WHERE username = %s',[name])
     registered_users = models.Users.objects.raw('SELECT * FROM tvs_users')
     #store data extracted
     resume_path=''
@@ -545,35 +546,43 @@ def apply(request):
                     # not empty
                     instance = form.save(commit=False)
                     instance.username = name
+                    request.session['contacts'] =form.cleaned_data['contact']
+
+                    #request.session['aaabbb'] = contact
                  #   instance.location = region
-                    instance.school = school
-                    instance.ward = ward
+                  #  instance.school = school
+                  #  instance.ward = ward
                     instance.status_update = 'Pending'
                     voluntee = voluntee + 1
-                  #  updateChart(voluntee, region)
+                    #updateChart(voluntee, region)
                     messages.success(request,'Request Submitted Successfully')
                     instance.save()
                     #send to status page
-                return redirect('status')
+                return redirect('chooselocation')
             else:
                 form.save(commit=False)
-            return redirect('status')
+            return redirect('chooselocation')
         else:
             form_data = VolunteerApply(request.POST, request.FILES)
+            print(form_data)
             if int_volunteer_check == 'Rejected' or  int_volunteer_check == '' or int_volunteer_check is None:
                 if form_data.is_valid():
                     instance = form_data.save(commit=False)
                     instance.username = name
-                    instance.location = region
+                    print(instance)
+                    #instance.location = region
                     instance.school = school
                     instance.ward = ward
                     instance.status_update = 'Pending'
                     instance.full_name = str(resume_data['name'])
                     if resume_data['mobile_number']:
                         contacts = resume_data['mobile_number']
+                        print(resume_data['mobile_number'])
                     elif resume_data['email']:
                         contacts = resume_data['email']
+
                     instance.contact = contacts
+
                     instance.carrier =  resume_data['designation']
                     instance.experience = resume_data['company_names']
                     instance.skills = resume_data['skills']
@@ -582,10 +591,10 @@ def apply(request):
                     updateChart(voluntee, region)
                     instance.save()
                     messages.success(request,'Request Submitted Successfully')
-                    return redirect('status')
+                    return redirect('chooselocation')
                 else:
                     form_data.save(commit=False)
-            return redirect('status')
+            return redirect('chooselocation')
     else:
         final_form=''
         if resume_validator:
@@ -1081,6 +1090,116 @@ def manage_applicant(request, education):
     }
 
     return render(request, template_name='admin/manageApplicant.html', context=to_html)
+
+
+def load_cities(request):
+    country_id = request.POST['Region']
+    cities = Council.objects.filter(Regions=country_id).order_by('name')
+    context={'cities': serializers.serialize('json', cities) }
+    return HttpResponse(json.dumps({'context': context}), content_type="application/json")
+
+
+
+def load_ward(request):
+    council_id = request.POST['District']
+    ward = Ward.objects.filter(Council=council_id).order_by('name')
+    context={'ward': serializers.serialize('json', ward) }
+    return HttpResponse(json.dumps({'context': context}), content_type="application/json")
+
+
+def load_school(request):
+    ward_id = request.POST['Ward']
+    school = School.objects.filter(ward=ward_id).order_by('name')
+    context = {'school': serializers.serialize('json', school)}
+    return HttpResponse(json.dumps({'context': context}), content_type="application/json")
+
+
+def chooselocation(request):
+
+
+
+    regions= Regions.objects.all();
+    context={'regions':regions}
+    return render(request, 'apply/location.html',context)
+
+def savelocation(request):
+
+    if request.method == 'POST':
+        Wards = request.POST['Ward']
+        School11 = request.POST['School13']
+        School12 = request.POST['School11']
+        School13 = request.POST['School12']
+        District= request.POST['District']
+        Region = request.POST['Region']
+
+        Ward1 = request.POST['Ward1']
+        District1 = request.POST['District1']
+        Region1 = request.POST['Region1']
+        Ward2 = request.POST['Ward2']
+        District2 = request.POST['District2']
+        Region2 = request.POST['Region2']
+        r1 = Regions.objects.get(RegionCode=Region)
+        r2 = Regions.objects.get(RegionCode=Region1)
+        r3 = Regions.objects.get(RegionCode=Region2)
+        c1= Council.objects.get(CouncilCode=District)
+        c2 = Council.objects.get(CouncilCode=District1)
+        c3 = Council.objects.get(CouncilCode=District2)
+        w  = Ward.objects.get(WardCode=Wards)
+        w1 = Ward.objects.get(WardCode=Ward1)
+        w2 = Ward.objects.get(WardCode=Ward2)
+        ss =  School.objects.get(pk=School11)
+        ssc = School.objects.get(pk=School12)
+        sscw =School.objects.get(pk=School13)
+        cc = request.session.get('contacts')
+        Volunta=Volunteer.objects.get(contact=cc)
+       # Voluntz=Volunta(city1=r1,city2=r2,city3=r3,council1=c1,council2=c2,council3=c3,
+      #  ward1=w,ward2=w1,ward3=w2,School1=ss,School2=ssc,School3=sscw )
+        Volunta.city1 = r1
+        Volunta.city2 = r2
+        Volunta.city3 = r3
+        Volunta.council1 = c1
+        Volunta.council2 =c2
+        Volunta.council3 =c3
+        Volunta.ward1 = w
+        Volunta.ward2 = w1
+        Volunta.ward3 = w2
+        Volunta.School1 = ss
+        Volunta.School2 = ssc
+        Volunta.School3 = sscw
+        Volunta.save()
+        return redirect('status')
+
+
+   # return HttpResponse("asdasdas")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #TODO: nOTIFICATION

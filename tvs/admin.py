@@ -13,7 +13,8 @@ admin.site.register(models.Users, UserField)
 
 class VolunteerField(admin.ModelAdmin):
     list_display = ('username','full_name', 'contact', 'location', 'education', 'experience'
-                    , 'why_volunteer', 'status_update', 'reason','length','school','ward')
+                    , 'why_volunteer', 'status_update', 'reason','length','school','ward','city1','council1'
+                    ,'ward1','School1','city2','council2','School2','ward2','city3','council3','ward3','School3')
 admin.site.register(models.Volunteer, VolunteerField)
 
 class UploadCvs(admin.ModelAdmin):

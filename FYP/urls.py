@@ -42,5 +42,10 @@ urlpatterns = [
     path('render/pdf/<str:full_name>', Pdf.as_view(), name='user_data'),
     path('manage/approve/<str:full_name>',view.updateStatus,name='approve'),
     path('manage/ed-level/<str:education>',view.manage_applicant,name='manage_applicant'),
+    path('location/', view.chooselocation, name='chooselocation'),
+    path('ajax/load-cities/', view.load_cities, name='ajax_load_cities'),
+    path('ajax/load-ward/', view.load_ward, name='ajax_load_ward'),
+    path('ajax/load-school/', view.load_school, name='ajax_load_school'),
+    path('save/location/', view.savelocation, name='savelocation'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

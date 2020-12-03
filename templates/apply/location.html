@@ -1,0 +1,460 @@
+{% extends 'base_files/base.html' %}
+{% load static %}
+
+{% block base_content %}
+{% include 'alerts/timed_alerts.html' %}
+
+<header id="header">
+    <div class="container">
+
+      <div id="logo" class="pull-left">
+        <a href="{% url 'home' %}"><img src="{% static '/img/top.png' %}" alt="Volunteer"></a>
+      </div>
+
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li><a style="color: white;" href="{% url 'profile' %}">Hi, {{ name }}</a></li>
+          <li class="buy-tickets"><a href="{% url 'profile' %}">Profile</a></li>
+            <li class="buy-tickets"><a href="{% url 'status' %}">Status</a></li>
+          <li class="buy-tickets"><a href="{% url 'userLogout' %}">Log Out</a></li>
+          <!-- check if user is pending approval do not show the button -->
+          <!-- 1 is for pending 0 is not applied (or approved whatev) -->
+          {% if applied == 'rejected' or applied == '' %}
+          <li class="buy-tickets"><a href="{% url 'apply' %}">Apply</a></li>
+          {% endif %}
+        </ul>
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </header><!-- #header -->
+
+
+  <div class="container shadow-lg p-3 mb-5 bg-white rounded" id="container-chart">
+    <div class="container wow fadeIn">
+        <div class="section-header">
+                <h2>Choose you Destination to volunteer</h2>
+
+        </div >
+        <div class="card mb-5 mb-lg-0">
+            <div class="card-body">
+                    <form action="{% url 'savelocation' %}" method="POST" enctype="multipart/form-data" id="location" data-cities-url="{% url 'ajax_load_cities' %}" data-ward-url=" {% url 'ajax_load_ward' %}" data-school-url=" {% url 'ajax_load_school' %}" >
+                              {% csrf_token %}
+                        <div class="form-group row">
+                            <div class="col-3">
+                                <label><strong>Region<span style="color: red;"> *</span></strong></label>
+                                <select required class="form-control" id="Region" name="Region" >
+                                    <option value="" disabled selected hidden>select Region</option>
+                                    {% for  region in regions %}
+                                        <option value="{{region.RegionCode}}">{{region.name}}</option>
+                                        {% endfor%}
+                                </select>
+                            </div>
+                         <div class="col-3">
+                                <label><strong>District<span style="color: red;"> *</span></strong></label>
+                                <select required class="form-control" id="District" name="District" >
+                                    <option value="" disabled selected hidden>select District</option>
+                                        <option value=""></option></select></div>
+                         <div class="col-3">
+                                <label><strong>Ward<span style="color: red;"> *</span></strong></label>
+                                <select required class="form-control" id="ward" name="Ward" >
+                                    <option value="" disabled selected hidden>select Ward</option>
+                                        <option value=""></option></select></div>
+                            <div class="col-3">
+                                <label><strong>School<span style="color: red;"> *</span></strong></label>
+                                <select required class="form-control" id="school" name="School13" >
+                                    <option value="" disabled selected hidden>select School</option>
+                                        <option value=""></option></select></div>
+                    </div>
+
+  <div class="form-group row">
+                            <div class="col-3">
+                                <label><strong>Region<span style="color: red;"> *</span></strong></label>
+                                <select required class="form-control" id="Region1" name="Region1" >
+                                    <option value="" disabled selected hidden>select Region</option>
+                                    {% for  region in regions %}
+                                        <option value="{{region.RegionCode}}">{{region.name}}</option>
+                                        {% endfor%}
+                                </select>
+                            </div>
+                         <div class="col-3">
+                                <label><strong>District<span style="color: red;"> *</span></strong></label>
+                                <select required class="form-control" id="District1" name="District1" >
+                                    <option value="" disabled selected hidden>select District</option>
+                                        <option value=""></option></select></div>
+                         <div class="col-3">
+                                <label><strong>Ward<span style="color: red;"> *</span></strong></label>
+                                <select required class="form-control" id="ward1" name="Ward1" >
+                                    <option value="" disabled selected hidden>select Ward</option>
+                                        <option value=""></option></select></div>
+                            <div class="col-3">
+                                <label><strong>School<span style="color: red;"> *</span></strong></label>
+                                <select required class="form-control" id="school1" name="School11" >
+                                    <option value="" disabled selected hidden>select School</option>
+                                        <option value=""></option></select></div>
+                    </div>
+
+                        <div class="form-group row">
+                            <div class="col-3">
+                                <label><strong>Region<span style="color: red;"> *</span></strong></label>
+                                <select required class="form-control" id="Region2" name="Region2" >
+                                    <option value="" disabled selected hidden>select Region</option>
+                                    {% for  region in regions %}
+                                        <option value="{{region.RegionCode}}">{{region.name}}</option>
+                                        {% endfor%}
+                                </select>
+                            </div>
+                         <div class="col-3">
+                                <label><strong>District<span style="color: red;"> *</span></strong></label>
+                                <select required class="form-control" id="District2" name="District2" >
+                                    <option value="" disabled selected hidden>select District</option>
+                                        <option value=""></option></select></div>
+                         <div class="col-3">
+                                <label><strong>Ward<span style="color: red;"> *</span></strong></label>
+                                <select required class="form-control" id="ward2" name="Ward2" >
+                                    <option value="" disabled selected hidden>select Ward</option>
+                                        <option value=""></option></select></div>
+                            <div class="col-3">
+                                <label><strong>School<span style="color: red;"> *</span></strong></label>
+                                <select required class="form-control" id="school2" name="School12" >
+                                    <option value="" disabled selected hidden>select School</option>
+                                        <option value=""></option></select></div>
+                    </div>
+
+
+
+
+
+
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>{{ message }}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i>
+                                    </span>
+                                  </button>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+
+
+                            <p><div class="text-center">
+                              <button class="btn btn-success" type="submit" >Submit</button>
+                          </div></p>
+
+
+                    </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% include 'footer/footer.html'%}
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+ <script type="text/javascript">
+        $(document).ready(function(){
+let repo;
+            $("#ward").on('change',function () {
+                var url = $("#location").attr("data-school-url");
+                $("#school").empty();
+                var WardId = $(this).val();
+
+                $.ajax({
+                    type: "post",
+                    headers: {"X-CSRFToken": '{{ csrf_token }}'},
+                    url: url,
+                    data: {
+                      'Ward': WardId
+                    },
+
+                    success: function (data) {
+                              console.log(data.context.school)
+                        var repo =JSON.parse(data.context.school);
+
+                        $("#school").empty();
+                        $("#school").append('<option value="">select School</option>');
+                                                 for (let x = 0 ; x < repo.length;x++){
+                         $('#school').append('<option value="'+repo[x].pk+'">'+repo[x].fields.name+'</option>');
+                                            }
+                    }
+                });
+            })
+        });
+    </script>
+
+
+
+ <script type="text/javascript">
+        $(document).ready(function(){
+let repo;
+            $("#Region").on('change',function () {
+                var url = $("#location").attr("data-cities-url");
+                $("#District").empty();
+                var RegionId = $(this).val();
+                $.ajax({
+                    type: "post",
+                    headers: {"X-CSRFToken": '{{ csrf_token }}'},
+                    url: url,
+                    data: {
+                      'Region': RegionId
+                    },
+
+                    success: function (data) {
+
+                        var repo =JSON.parse(data.context.cities);
+
+                        $("#District").empty();
+                        $("#District").append('<option value="">select District</option>');
+                                                 for (let x = 0 ; x < repo.length;x++){
+                         $('#District').append('<option value="'+repo[x].pk+'">'+repo[x].fields.name+'</option>');
+                                            }
+                    }
+                });
+            })
+        });
+    </script>
+
+ <script type="text/javascript">
+        $(document).ready(function(){
+let repo;
+            $("#District").on('change',function () {
+                var url = $("#location").attr("data-ward-url");
+                $("#ward").empty();
+                var DistrictId= $(this).val();
+                $.ajax({
+                    type: "post",
+                    headers: {"X-CSRFToken": '{{ csrf_token }}'},
+                    url: url,
+                    data: {
+                      'District': DistrictId
+                    },
+
+                    success: function (data) {
+
+                        var repo =JSON.parse(data.context.ward);
+
+                        $("#ward").empty();
+                        $("#ward").append('<option value="">select Ward</option>');
+                                                 for (let x = 0 ; x < repo.length;x++){
+                         $('#ward').append('<option value="'+repo[x].pk+'">'+repo[x].fields.name+'</option>');
+                                            }
+                    }
+                });
+            })
+        });
+    </script>
+
+<!--ajaxx two-->
+ <script type="text/javascript">
+        $(document).ready(function(){
+let repo;
+            $("#ward1").on('change',function () {
+                var url = $("#location").attr("data-school-url");
+                $("#school1").empty();
+                var WardId = $(this).val();
+                console.log(WardId)
+                $.ajax({
+                    type: "post",
+                    headers: {"X-CSRFToken": '{{ csrf_token }}'},
+                    url: url,
+                    data: {
+                      'Ward': WardId
+                    },
+
+                    success: function (data) {
+                              console.log(data.context.school)
+                        var repo =JSON.parse(data.context.school);
+
+                        $("#school1").empty();
+                        $("#school1").append('<option value="">select School</option>');
+                                                 for (let x = 0 ; x < repo.length;x++){
+                         $('#school1').append('<option value="'+repo[x].pk+'">'+repo[x].fields.name+'</option>');
+                                            }
+                    }
+                });
+            })
+        });
+    </script>
+
+
+
+ <script type="text/javascript">
+        $(document).ready(function(){
+let repo;
+            $("#Region1").on('change',function () {
+                var url = $("#location").attr("data-cities-url");
+                $("#District1").empty();
+                var RegionId = $(this).val();
+                $.ajax({
+                    type: "post",
+                    headers: {"X-CSRFToken": '{{ csrf_token }}'},
+                    url: url,
+                    data: {
+                      'Region': RegionId
+                    },
+
+                    success: function (data) {
+
+                        var repo =JSON.parse(data.context.cities);
+
+                        $("#District1").empty();
+                        $("#District1").append('<option value="">select District</option>');
+                                                 for (let x = 0 ; x < repo.length;x++){
+                         $('#District1').append('<option value="'+repo[x].pk+'">'+repo[x].fields.name+'</option>');
+                                            }
+                    }
+                });
+            })
+        });
+    </script>
+
+ <script type="text/javascript">
+        $(document).ready(function(){
+let repo;
+            $("#District1").on('change',function () {
+                var url = $("#location").attr("data-ward-url");
+                $("#ward1").empty();
+                var DistrictId= $(this).val();
+                $.ajax({
+                    type: "post",
+                    headers: {"X-CSRFToken": '{{ csrf_token }}'},
+                    url: url,
+                    data: {
+                      'District': DistrictId
+                    },
+
+                    success: function (data) {
+
+                        var repo =JSON.parse(data.context.ward);
+
+                        $("#ward1").empty();
+                        $("#ward1").append('<option value="">select Ward</option>');
+                                                 for (let x = 0 ; x < repo.length;x++){
+                         $('#ward1').append('<option value="'+repo[x].pk+'">'+repo[x].fields.name+'</option>');
+                                            }
+                    }
+                });
+            })
+        });
+    </script>
+
+<!--ajax threee-->
+
+<script type="text/javascript">
+        $(document).ready(function(){
+let repo;
+            $("#ward1").on('change',function () {
+                var url = $("#location").attr("data-school-url");
+                $("#school2").empty();
+                var WardId = $(this).val();
+                console.log(WardId)
+                $.ajax({
+                    type: "post",
+                    headers: {"X-CSRFToken": '{{ csrf_token }}'},
+                    url: url,
+                    data: {
+                      'Ward': WardId
+                    },
+
+                    success: function (data) {
+                              console.log(data.context.school)
+                        var repo =JSON.parse(data.context.school);
+
+                        $("#school2").empty();
+                        $("#school2").append('<option value="">select School</option>');
+                                                 for (let x = 0 ; x < repo.length;x++){
+                         $('#school2').append('<option value="'+repo[x].pk+'">'+repo[x].fields.name+'</option>');
+                                            }
+                    }
+                });
+            })
+        });
+    </script>
+
+
+
+ <script type="text/javascript">
+        $(document).ready(function(){
+let repo;
+            $("#Region2").on('change',function () {
+                var url = $("#location").attr("data-cities-url");
+                $("#District2").empty();
+                var RegionId = $(this).val();
+                $.ajax({
+                    type: "post",
+                    headers: {"X-CSRFToken": '{{ csrf_token }}'},
+                    url: url,
+                    data: {
+                      'Region': RegionId
+                    },
+
+                    success: function (data) {
+
+                        var repo =JSON.parse(data.context.cities);
+
+                        $("#District2").empty();
+                        $("#District2").append('<option value="">select District</option>');
+                                                 for (let x = 0 ; x < repo.length;x++){
+                         $('#District2').append('<option value="'+repo[x].pk+'">'+repo[x].fields.name+'</option>');
+                                            }
+                    }
+                });
+            })
+        });
+    </script>
+
+ <script type="text/javascript">
+        $(document).ready(function(){
+let repo;
+            $("#District2").on('change',function () {
+                var url = $("#location").attr("data-ward-url");
+                $("#ward2").empty();
+                var DistrictId= $(this).val();
+                $.ajax({
+                    type: "post",
+                    headers: {"X-CSRFToken": '{{ csrf_token }}'},
+                    url: url,
+                    data: {
+                      'District': DistrictId
+                    },
+
+                    success: function (data) {
+
+                        var repo =JSON.parse(data.context.ward);
+
+                        $("#ward2").empty();
+                        $("#ward2").append('<option value="">select Ward</option>');
+                                                 for (let x = 0 ; x < repo.length;x++){
+                         $('#ward2').append('<option value="'+repo[x].pk+'">'+repo[x].fields.name+'</option>');
+                                            }
+                    }
+                });
+            })
+        });
+    </script>
+
+
+
+
+
+
+
+{% endblock%}
