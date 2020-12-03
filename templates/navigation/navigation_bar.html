@@ -1,0 +1,43 @@
+  
+  {% load static %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/assets/bootstrap/css/bootstrap.min.css' %}">
+</head>
+  <header id="header">
+    <div class="container">
+
+      <div id="logo" class="pull-left">
+        <a href="{% url 'home' %}"><img src="{% static '/img/top.png' %}" alt="Volunteer"></a>
+      </div>
+
+      <nav id="nav-menu-container">
+        {% if username %}
+        <ul class="nav-menu">
+          <li><a style="color: white;" href="{% url 'profile' %}">Hi, {{ username }}</a></li>
+          <!-- if in status page do not show Profile Button -->
+          {% if request.path != '/home/profile' %}
+          <li class="buy-tickets"><a href="{% url 'profile' %}">Profile</a></li>
+          {% endif %}
+          <!-- if in status or profile page do not show Status Button -->
+          {% if request.path != '/home/status'%}
+            {% if request.path != '/home/profile'%}
+            <li class="buy-tickets"><a href="{% url 'status' %}">Status</a></li>
+            {% endif %}
+          {% endif %}
+          <li class="buy-tickets"><a href="{% url 'userLogout' %}">Log Out</a></li>
+          <!-- check if user is pending approval do not show the button -->
+          <!-- approved/pending/rejected -->
+          {% if applied == '' or applied == 'rejected' %}
+          <li class="buy-tickets"><a href="{% url 'apply' %}">Apply</a></li>
+          {% endif %}
+        </ul>
+        {% else %}
+        <ul class="nav-menu"> 
+            <li class="buy-tickets"><a href="{% url 'login' %}">Sign In</a></li>
+            <li class="buy-tickets"><a href="{% url 'signup' %}">Sign Up</a></li>
+        </ul>
+        {% endif %}
+
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </header><!-- #header -->

@@ -1,0 +1,74 @@
+{% extends 'base_files/account_base.html'  %}
+{% load static %}
+
+{% block account_content %}
+
+<div class="container shadow-lg p-3 mb-5 bg-white rounded " id="container-chart">
+    <div class="container wow fadeIn">
+        <div class="section-header">
+            <a href="{% url 'index' %}">
+                <h2>Welcome Back To Volunteer</h2>
+            </a>
+            <p>We are thrilled to have you back</p>
+        </div>
+        <div class="card mb-5 mb-lg-0">
+            <div class="card-body">
+                    <form action="{% url 'login' %}" method="POST" enctype="multipart/form-data">
+                        
+                            {% csrf_token %}
+
+                            <div class="fieldWrapper">
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <strong>Username</strong>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            {{ loginform.username }}
+                                        </div>
+                            </div>
+                                <div class="row" style="margin-top: 10px;">
+                                       <div class="col-sm-4">
+                                            <strong>Pasword</strong>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            {{ loginform.password }}
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+                        {% if error_msg %}
+                            <div class="row">
+                            <div class="col-sm-4">
+                            </div>
+                            <div class="col-sm-7">
+                                <small class="text-danger">{{ error_msg }}</small>
+                            </div>
+                        </div>
+                        {% endif %}
+                     <div class="row">
+                            <div class="col-sm-4">
+                            </div>
+                            <div class="col-sm-7">
+                                <button class="btn btn-success" type="submit" >Login</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                            </div>
+                            <div class="col-sm-7">
+                                Don't have an account? <a href="{% url 'signup' %}" >
+                                <span style="color: green;">Register here</span>
+                            </a>
+                            </div>
+                        </div>
+
+                    </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock%}

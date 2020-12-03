@@ -1,0 +1,54 @@
+{% extends 'base_files/account_base.html' %}
+{% load static %}
+
+{% block account_content %}     
+{% include 'alerts/timed_alerts.html' %}
+<div class="container shadow-lg p-3 mb-5 bg-white rounded " id="reg">
+    <div class="container wow fadeIn">
+        <div class="section-header">
+            <a href="{% url 'index' %}">
+                <h2>Welcome To Volunteer</h2>
+            </a>
+            <p>Fill In Your Details</p>
+        </div class="col-lg-12">
+        <div class="card mb-5 mb-lg-0">
+            <div class="card-body">                
+                    <form action="" method="post" enctype="multipart/form-data">
+                        
+                            {% csrf_token %}
+                
+                            {% for field in form %}
+                    <p>
+                        <div class="fieldWrapper">
+                            {{ field.errors }}
+                            <p>
+                                <div class="row">
+                                    <p><div class="col-sm-4">
+                                        <strong>{{ field.label_tag }}</strong>
+                                    </div></p>
+                                    <p><div class="col-sm-7">
+                                        {{ field }}
+                                    </div></p>
+                                </div>
+                            </p>
+                        </div>
+                    </p>
+                            {% endfor %}
+                            
+                            <div class="text-center">
+                            <a href="{% url 'login' %}" >
+                                <h6 style="color: green;">Registered? Sign in</h6>
+                            </a>
+                            <button class="btn btn-success" type="submit" >Proceed</button>
+                        </div>
+                        
+                
+                    </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock%}

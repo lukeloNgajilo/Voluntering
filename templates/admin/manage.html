@@ -1,0 +1,213 @@
+{% extends 'base_files/base.html' %}
+{% load static %}
+ 
+
+    {% block base_content %}
+
+    {% include 'navigation/admin_navigation.html' %}
+    {% include 'alerts/timed_alerts.html' %}
+
+<div class="container shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="section-header">
+        <h2>UPLOAD USERS DATA</h2>
+    </div>
+    <div class="col-lg-12"">
+        <div class="card mb-5 mb-lg-0">
+            <div class="card-body">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                        <div class="fieldWrapper">
+                            {{ field.errors }}
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{ field.label_tag }}
+                                </div>
+                                <div class="col-sm-7">
+                                    {{ field }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i>                </span>
+                          </button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <div class="text-center">
+                        <button class="btn btn-success" type="submit">Submit</button>
+                    </div>
+                </form>
+
+                {% if file %}
+                    <div class="row">
+                        <div class="col-sm-4" id="filename">
+                            <h4>Files present</h4>
+                            {% for file in file %}
+                                <ul class="fa-ul">
+                                    <li><i class="fa-li fa fa-check-square"></i>{{ file.filename }}</li>
+                                </ul>
+                            {% endfor %}
+                        </div>
+                        <div class="col-sm-7">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="text" name="file-name" title="name" class="form-control">
+                                <div class="text-center">
+                                    <button class="btn btn-success" type="submit">Clean</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <nav aria-label="Page navigation example">
+                                <ul>
+                                    {% for pg in page %}
+                                        {% if file.number == pg %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ pg }}"
+                                                   class="btn btn-default">{{ pg }}</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ pg }}" class="btn">{{ pg }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if file.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ file.previous_page_number }}"
+                                               tabindex="-1">Previous</a>
+                                        </li>
+                                    {% endif %}
+                                    {% if file.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ file.next_page_number }}">Next</a>
+                                        </li>
+                                    {% endif %}
+                                    <span>Page {{ file.number }} of {{ file.paginator.num_pages }}</span>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <p>
+            <div class="text-center">
+                <div class="section-header">
+                    <p>MANAGE APPLICANTS</p>
+                </div>
+            </div>
+        </p>
+        <div class="col-lg-12">
+           <div class="text-center">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- <span> -->
+                        <a class="btn btn-light action-button" id="btn-cert-1" role="button"
+                           href="{% url 'manage_applicant' 'Certificate level' %}">
+                            <strong style="font-size: 1.6em">
+                                Certificate Level
+                            </strong>
+                            <br>
+                            <strong>
+                                <span style="font-size: 1.4em">{{ cert.count }} <label
+                                        for="cert-count">Applicant</label></span>
+                            </strong>
+                            <br>
+
+                                <span style="font-size: 1em">{{ cert1.count }} <label
+                                        for="cert-count">Approved</label></span>
+
+                        </a>
+                    <!-- </span> -->
+                </div>
+                
+                <div class="col-md-6">
+                    <!-- <span id="cert"> -->
+                        <a class="btn btn-light action-button" id="btn-cert-1" role="button"
+                           href="{% url 'manage_applicant' 'Diploma level' %}">
+                            <strong style="font-size: 1.6em">
+                                Diploma Level
+                            </strong>
+                            <br>
+                            <strong>
+                                <span style="font-size: 1.4em">{{ dipl.count }} <label
+                                        for="cert-count">Applicant</label></span>
+                            </strong>
+                            <br>
+
+                                <span style="font-size: 1em">{{ dipl1.count }} <label
+                                        for="cert-count">Approved</label></span>
+                        </a>
+                    <!-- </span> -->
+                </div>
+            </div>
+           </div>
+
+            <p>
+                <div class="text-center">
+                    <div class="row">
+                        <p>
+                            <div class="col-md-6">
+                                <!-- <span id="cert"> -->
+                                    <a class="btn btn-light action-button" id="btn-cert-1" role="button"
+                                       href="{% url 'manage_applicant' 'Degree level' %}">
+                                        <strong style="font-size: 1.6em">
+                                            Degree Level
+                                        </strong>
+                                        <br>
+                                        <strong>
+                                            <span style="font-size: 1.4em">{{ degr.count }} <label
+                                                    for="cert-count">Applicant</label></span>
+                                        </strong>
+                                        <br>
+            
+                                            <span style="font-size: 1em">{{ degr1.count }} <label
+                                                    for="cert-count">Approved</label></span>
+                                    </a>
+                                <!-- </span> -->
+                            </div>
+                        </p>
+                        <p>
+                            <div class="col-md-6">
+                                <!-- <span id="cert"> -->
+                                    <a class="btn btn-light action-button" id="btn-cert-1" role="button"
+                                       href="{% url 'manage_applicant' 'Masters level' %}">
+                                        <strong style="font-size: 1.6em">
+                                            Masters Level
+                                        </strong>
+                                        <br>
+                                        <strong>
+                                            <span style="font-size: 1.4em">{{ mast.count }} <label
+                                                    for="cert-count">Applicant</label></span>
+                                        </strong>
+                                        <br>
+            
+                                            <span style="font-size: 1em">{{ mast1.count }} <label
+                                                    for="cert-count">Approved</label></span>
+                                    </a>
+                                <!-- </span> -->
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

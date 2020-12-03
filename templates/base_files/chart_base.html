@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+    <head>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+        <meta charset="utf-8">
+        <title>Volunteer</title>
+        {% include 'base_files/designing_base.html' %}
+        {% include 'charts/scripts.html' %}
+        {% include 'notification_script/web_push.html' %}
+    </head>
+    <body>
+        {% block chart_base_content %}
+        {% endblock%}
+        {% include 'base_files/alert_script.html' %}
+        {% include 'base_files/js_redirects.html' %}
+        <script>
+            var chart_id ={{ chartID|safe }};
+            var chart ={{ chart|safe }};
+            var title ={{ title|safe }};
+            var xAxis ={{ xAxis|safe }};
+            var yAxis ={{ yAxis|safe }};
+            var series ={{ series|safe }};
+            var datas = {{ sample|safe }};
+        
+        </script>
+        
+        <script>
+        
+            $(function () {
+        
+                // Create the chart
+                var options = {
+                    chart: {
+                        events: {
+                            drilldown: function (e) {
+                                if (!e.seriesOptions) {
+        
+                                    var chart = this;
+        
+                                    // Show the loading label
+                                    chart.showLoading('Loading ...');
+        
+                                    setTimeout(function () {
+                                        chart.hideLoading();
+                                        chart.addSeriesAsDrilldown(e.point, series);
+                                    }, 1000);
+                                }
+        
+                            }
+                        },
+                        plotBorderWidth: 0
+                    },
+        
+                    title: title,
+                    xAxis: xAxis,
+                    yAxis: yAxis,
+                    legend: {
+                        enabled: true,
+                    },
+        
+                    plotOptions: {
+                        series: {
+                            pointPadding: 0.2,
+                            borderWidth: 0,
+        
+                        },
+                        pie: {
+                            plotBorderWidth: 0,
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            size: '100%',
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.name}: <b>{point.y}</b>'
+                            }
+                        }
+                    },
+        
+                    series: series,
+        
+                };
+        
+                // Column chart
+                options.chart.renderTo = chart_id;
+                options.chart.type = 'column';
+                var chart1 = new Highcharts.Chart(options);
+        
+                chartfunc = function () {
+                    var column = document.getElementById('column');
+                    var bar = document.getElementById('bar');
+                    var pie = document.getElementById('pie');
+                    var line = document.getElementById('line');
+        
+                    var chart1;
+        
+                    if (column.checked) {
+        
+                        options.chart.renderTo = chart_id;
+                        options.chart.type = 'column';
+                        chart1 = new Highcharts.Chart(options);
+                    }
+                    else if (line.checked) {
+                        options.chart.renderTo = chart_id;
+                        options.chart.type = 'line';
+                        chart1 = new Highcharts.Chart(options);
+                    }
+        
+                };
+        
+                $('#change_chart_title').click(function () {
+                    var new_title = $('#chart_title').val();
+                    var chart = $('#container').highcharts();
+                    chart.setTitle({text: new_title});
+        
+                    alert('Chart title changed to ' + new_title + ' !');
+        
+                });
+            });
+        
+        </script>
+        
+        <script>
+        
+            // Create the chart
+            Highcharts.mapChart('container1', {
+                chart: {
+                    map: 'countries/tz/tz-all'
+                },
+        
+                title: {
+                    text: 'PTR greater than 50'
+                },
+        
+                subtitle: {
+                    text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/tz/tz-all.js">United Republic of Tanzania</a>'
+                },
+        
+                mapNavigation: {
+                    enabled: true,
+                    buttonOptions: {
+                        verticalAlign: 'bottom'
+                    }
+                },
+        
+                colorAxis: {
+                    min: 0
+                },
+        
+                series: [{
+                    data: datas,
+                    name: 'PTR',
+                    states: {
+                        hover: {
+                            color: '#BADA55'
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}'
+                    }
+                }]
+            });
+        </script>
+        
+        <script>
+            $('.counter-count').each(function () {
+                $(this).prop('Counter', 0).animate({
+                    Counter: $(this).text()
+                }, {
+                    duration: 5000,
+                    easing: 'swing',
+                    step: function (now) {
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,85 @@
+{% extends 'base_files/base.html' %}
+{% load static %}
+
+{% block base_content %}
+{% include 'alerts/timed_alerts.html' %}
+
+<header id="header">
+    <div class="container">
+
+      <div id="logo" class="pull-left">
+        <a href="{% url 'home' %}"><img src="{% static '/img/top.png' %}" alt="Volunteer"></a>
+      </div>
+
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li><a style="color: white;" href="{% url 'profile' %}">Hi, {{ name }}</a></li>
+          <li class="buy-tickets"><a href="{% url 'profile' %}">Profile</a></li>
+            <li class="buy-tickets"><a href="{% url 'status' %}">Status</a></li>
+          <li class="buy-tickets"><a href="{% url 'userLogout' %}">Log Out</a></li>
+          <!-- check if user is pending approval do not show the button -->
+          <!-- 1 is for pending 0 is not applied (or approved whatev) -->
+          {% if applied == 'rejected' or applied == '' %}
+          <li class="buy-tickets"><a href="{% url 'apply' %}">Apply</a></li>
+          {% endif %}
+        </ul>
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </header><!-- #header -->
+
+
+  <div class="container shadow-lg p-3 mb-5 bg-white rounded" id="container-chart">
+    <div class="container wow fadeIn">
+        <div class="section-header">
+                <h2>APPLICATION</h2>
+                <p>Upload Data</p>
+        </div class="col-lg-12">
+        <div class="card mb-5 mb-lg-0">
+            <div class="card-body">                
+                    <form action="" method="post" enctype="multipart/form-data">
+                        
+                            {% csrf_token %}
+                
+                            {% for field in form %}
+                            <div class="fieldWrapper">
+                                {{ field.errors }}
+                               <p>
+                                <div class="row">
+                                  <p><div class="col-sm-4">
+                                    <strong>{{ field.label_tag }}</strong>
+                                </div></p>
+                                  <p><div class="col-sm-7">
+                                    {{ field }}
+                                </div></p>
+                              </div>
+                               </p>
+                            </div>
+                            {% endfor %}
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>{{ message }}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i>                </span>
+                                  </button>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            
+                            <p><div class="text-center">
+                              <button class="btn btn-success" type="submit" >Submit</button>
+                          </div></p>
+                        
+                
+                    </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+{% include 'footer/footer.html'%}
+
+{% endblock%}

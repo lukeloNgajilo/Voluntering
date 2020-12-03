@@ -1,0 +1,54 @@
+{% extends 'base_files/base.html' %}
+{% load static %}
+
+    {% block base_content %}
+
+    {% include 'navigation/admin_navigation.html' %}
+
+        <div class="container shadow-lg p-3 mb-5 bg-white rounded">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 style="margin-bottom: 1%; text-align: center">MANAGE APPLICANTS</h2>
+        
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Full name</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                            <th>Preview</th>
+                            <th>Approve</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for f in applicant %}
+                            <tr>
+                                <td>{{ f.full_name }}</td>
+                                <td>{{ f.contact }}</td>
+                                <td>{{ f.status_update }}</td>
+                                <form action="{% url 'user_data' f.full_name %}" method="get">
+                                    {% csrf_token %}
+                                    <td>
+                                        <button class="btn-success" id="btn-admin">Preview CV</button>
+                                    </td>
+                                </form>
+                                <form action="{% url 'approve' f.full_name %}">
+                                    {% csrf_token %}
+                                    <td>
+                                        <button class="btn-success" id="btn-approve" onclick="return submitForm(this.form)">
+                                            Approve
+                                        </button>
+                                    </td>
+                                </form>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        
+    {% include 'base_files/js_redirects.html' %}
+
+    {% endblock%}

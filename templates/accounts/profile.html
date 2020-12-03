@@ -1,0 +1,124 @@
+{% extends 'base_files/base.html' %}
+{% load static %}
+
+ {% block base_content %}
+ {% include 'navigation/navigation_bar.html'%}      
+ <div class="container shadow-lg p-3 mb-5 bg-white rounded " id="container-chart">
+    <div class="container wow fadeIn">
+        <div class="section-header">
+            <h2>Profile</h2></div>
+            <div class="col-lg-12">
+                <div class="card mb-5 mb-lg-0">
+                    <div class="card-body">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                           <p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <strong>First name</strong>
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="text" value="{{ firstname }}" name="firstname" title="firstname" class="form-control">
+                                </div>
+                            </div>
+                           </p>
+                            <p>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <strong>Last name</strong>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input type="text" value="{{ lastname }}" name="lastname" title="lastname" class="form-control">
+                                    </div>
+                                </div>
+                            </p>
+                           <p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <strong>Username</strong>
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="text" value="{{ name }}" name="username" title="username" class="form-control">
+                                </div>
+                            </div>
+                           </p>
+                           <p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <strong>Email</strong>
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="text" value="{{ email }}" name="email" title="email" class="form-control">
+                                </div>
+                            </div>
+                           </p>
+                          <p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <strong>Home</strong>
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="text" value="{{ home }}" name="home" class="form-control">
+                                </div>
+                            </div>
+                          </p>
+                         <p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <strong>Phone number</strong>
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="tel" value="{{ phone }}" name="phone" title="phone" class="form-control" pattern="^\+?1?\d{9,15}$">
+                                </div>
+                            </div>
+                         </p>
+                         <p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <strong>Subject Preferences</strong>
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="text" value="{{ subjects }}" name="subjects" title="subjects" class="form-control">
+                                </div>
+                                
+                          </div>
+                           </p>
+                                   <p>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <strong>Role</strong>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <input type="text" value="{{ role }}" name="role" title="role" class="form-control">
+                                            <p>
+                                                {% for message in messages %}
+                                             <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                 <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                {{ message }}
+                                            </div>
+                                            {% endfor %}
+                                            </p> 
+                                        </div>
+                                        
+                                  </div>
+                                   </p>
+                            <div class="text-center">
+                                <button class="btn btn-success" type="submit">Save</button>
+                            </div>
+                
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% include 'footer/footer.html'%}
+
+
+ {% endblock%}

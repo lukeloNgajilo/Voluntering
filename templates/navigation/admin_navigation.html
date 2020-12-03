@@ -1,0 +1,21 @@
+{% load static %}
+
+<header id="header">
+    <div class="container">
+
+      <div id="logo" class="pull-left">
+        <a href="{% url 'home' %}"><img src="{% static '/img/top.png' %}" alt="Volunteer"></a>
+      </div>
+
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li class="buy-tickets"><a href="{% url 'userLogout' %}">Log Out</a></li>
+          <!-- check if user is pending approval do not show the button -->
+<!-- approved/pending/rejected -->
+{% if applied == '' or applied == 'rejected' %}
+<li class="buy-tickets"><a href="{% url 'apply' %}">Apply</a></li>
+{% endif %}
+        </ul>
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </header><!-- #header -->

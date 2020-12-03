@@ -1,0 +1,42 @@
+{% extends 'base_files/chart_base.html'%}
+
+
+    {% block chart_base_content %}
+
+    {% include 'navigation/navigation_bar.html'%} 
+<div class="container shadow-lg p-3 mb-5 bg-white rounded " id="container-chart">
+    <div class="row" id="{{ chartID|safe }}">
+
+    </div>
+    <div class="row " id="option-row">
+        <div class="col">
+            <input type="radio" name="mychart"  id="column" value="column" onclick="chartfunc()"
+                   checked> Column
+            
+            <input type="radio" name="mychart"  id="line" value="line" onclick="chartfunc()"> Line
+        </div>
+    </div>
+</div>
+
+<div class="container shadow-lg p-3 mb-5 bg-white rounded " id="in-need">
+
+    <div class="row" id="top-div">
+        <div class="col-md-12" id="need">
+            <h2 style="color: black">IN NEED</h2>
+        </div>
+    </div>
+    <div id="container1">
+
+    </div>
+</div>
+
+{% include 'aim.html' %}
+
+
+
+{% include 'footer/footer.html'%}
+
+    {% endblock %}
+
+
+

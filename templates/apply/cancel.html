@@ -1,0 +1,57 @@
+{% extends 'base_files/base.html' %}
+{% load static %}
+
+{% block base_content %}
+
+{% include 'navigation/admin_navigation.html'%}
+
+{% include 'alerts/timed_alerts.html' %}
+
+<div class="container shadow-lg p-3 mb-5 bg-white rounded " id="container-chart">
+    <div class="container wow fadeIn">
+        <div class="section-header">
+            <h2>APPLICATION</h2>
+            <p>CANCEL APPLICATION STATUS</p>
+        </div>
+       <div class="col-lg-12">
+           <div class="card mb-5 mb-lg-0">
+               <div class="card-body">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+            
+                                {% for field in form %}
+                                <div class="fieldWrapper">
+                                    {{ field.errors }}
+                                   <p>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <strong>{{ field.label_tag }}</strong>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            {{ field }}
+                                        </div>
+                                    </div>
+                                   </p>
+                                </div>
+                                {% endfor %}
+            
+                                <div class="text-center">
+                                    <button class="btn btn-success" type="submit">Proceed</button>
+                                </div>
+                               
+                            </form>
+                        
+                   
+                
+               </div>
+           </div>
+       </div>
+    </div>
+
+</div>
+
+
+
+{% include 'footer/footer.html' %}
+
+{% endblock%}

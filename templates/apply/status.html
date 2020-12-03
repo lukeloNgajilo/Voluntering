@@ -1,0 +1,121 @@
+{% extends 'base_files/base.html' %}
+{% load static %}
+
+{% block base_content %}
+
+{% include 'navigation/navigation_bar.html'%}
+
+<div class="container shadow-lg p-3 mb-5 bg-white rounded" id="container-chart">
+    <div class="container wow fadeIn">
+        <div class="section-header">
+            <h2>APPLICANT STATUS</h2>
+        </div>
+      <div class="col-lg-12">
+          <div class="card mb-5 mb-lg-0">
+              <div class="card-body">
+                        {% for status in status %}
+                          <p>
+                            <div class="row">
+                                    
+                                        <div class="col-md-6">
+                                            <strong>Status</strong>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if status.status == "Rejected" %}
+                                            <strong style="color: red;">{{ status.status }}</strong>
+                                            {% else %}
+                                            {{ status.status }}
+                                            {%endif%}
+                                        </div>
+    
+                            </div>
+                          </p> <p>
+                            <div class="row">
+                                    
+                                        <div class="col-md-6">
+                                            <strong>Reason</strong>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {{ status.reason }}
+                                        </div>
+    
+                            </div>
+                          </p>
+<p>
+    <div class="row">
+                    
+                                    
+        <div class="col-md-6">
+            <strong>Location</strong>
+            
+        </div>
+        <div class="col-md-6">
+            {{ status.location }}
+        </div>
+   
+
+</div>
+</p>
+<p>
+    
+    <div class="row">
+                                
+                                    
+        <div class="col-md-6" >
+            <strong>School</strong>
+           
+        </div>
+        <div class="col-md-6">
+            {{ status.school }}
+        </div>
+    
+
+</div>
+</p>
+                           <p>
+                            <div class="row" >
+                                
+                                    
+                                <div class="col-md-6" >
+                                    <strong>Ward</strong>
+                                    
+                                </div>
+                                <div class="col-md-6" >
+                                    {{ status.ward }}
+                                </div>
+                            
+                        
+                    </div>
+                           </p>
+                        <p>
+                            <div class="row" >
+                                
+                                    
+                                <div class="col-md-6" >
+                                    <strong>Length</strong>
+                                    
+                                </div>
+                                <div class="col-md-6" >
+                                    {{ status.length }}
+                                </div>
+                            
+                        
+                    </div>
+                        </p>
+                        {% endfor %}
+                        {% if applied == 'pending'%}
+                        <div class="text-center">
+                            <a class="btn btn-danger" role="button" href="{% url 'cancel_application' %}">Cancel Application</a>
+                        </div>
+                        {%endif%}
+                   
+                
+              </div>
+          </div>
+      </div>  
+    </div>
+</div>
+
+{% include 'footer/footer.html' %}
+
+    {% endblock%}
