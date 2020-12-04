@@ -1127,16 +1127,14 @@ def load_ward(request):
 
 def load_school(request):
     ward_id = request.POST['Ward']
-    print(ward_id)
     school = []
     country_id = request.session.get('sregion')
     council_id = request.session.get('scouncil')
-    cc = test.objects.filter(region=country_id, council=council_id ,ward=ward_id)
-    print(cc)
+    cc = test.objects.filter(region=country_id, council=council_id ,ward=ward_id).values('schoolname')
     school=list(cc)
-    print(school)
+
     context = {'school':  school,
-               'tapss':len(cc)
+               'tass':len(cc)
                }
     return HttpResponse(json.dumps({'context': context}), content_type="application/json")
 
