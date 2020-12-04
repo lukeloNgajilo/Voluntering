@@ -1094,21 +1094,34 @@ def manage_applicant(request, education):
 
 def load_cities(request):
     country_id = request.POST['Region']
-    cities = Council.objects.filter(Regions=country_id).order_by('name')
-    context={'cities': serializers.serialize('json', cities) }
+
+    aa=test.objects.filter(region=country_id).order_by('council').values('council').distinct()
+    cities=list(aa)
+    print(cities)
+    #cities = Council.objects.filter(Regions=country_id).order_by('name')
+    context={'cities': cities}
     return HttpResponse(json.dumps({'context': context}), content_type="application/json")
 
 
 
 def load_ward(request):
     council_id = request.POST['District']
-    ward = Ward.objects.filter(Council=council_id).order_by('name')
+    country_id = request.POST['Region']
+
+    bb=test.objects.filter(region=country_id,council=council_id).order_by('ward').values('ward').distinct()
+    #ward = Ward.objects.filter(Council=council_id).order_by('name')
+    ward = list(bb)
     context={'ward': serializers.serialize('json', ward) }
     return HttpResponse(json.dumps({'context': context}), content_type="application/json")
 
 
 def load_school(request):
     ward_id = request.POST['Ward']
+    country_id = request.POST['Region']
+    regions = Regions.objects.all();
+    Ward.objects.filter(WardCode=ward_id)
+   # aa = test.objects.filter(region="" ward='Moshono')
+
     school = School.objects.filter(ward=ward_id).order_by('name')
     context = {'school': serializers.serialize('json', school)}
     return HttpResponse(json.dumps({'context': context}), content_type="application/json")
@@ -1118,7 +1131,9 @@ def chooselocation(request):
 
 
 
-    regions= Regions.objects.all();
+   # regions= Regions.objects.all();
+    regions= test.objects.values('region').distinct()
+
     context={'regions':regions}
     return render(request, 'apply/location.html',context)
 
@@ -1167,6 +1182,9 @@ def savelocation(request):
         Volunta.School2 = ssc
         Volunta.School3 = sscw
         Volunta.save()
+        max_ptr = Chart.objects.filter(ward=w)
+        print(max_ptr)
+        #datum = Chart.objects.filter(ptr=max_ptr['ptr__max'])
         return redirect('status')
 
 

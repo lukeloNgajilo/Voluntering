@@ -44,7 +44,7 @@
                                 <select required class="form-control" id="Region" name="Region" >
                                     <option value="" disabled selected hidden>select Region</option>
                                     {% for  region in regions %}
-                                        <option value="{{region.RegionCode}}">{{region.name}}</option>
+                                        <option value="{{region.region}}">{{region.region}}</option>
                                         {% endfor%}
                                 </select>
                             </div>
@@ -219,12 +219,15 @@ let repo;
 
                     success: function (data) {
 
-                        var repo =JSON.parse(data.context.cities);
+                     {##   var repo =JSON.parse(data);#}
+                        console.log(data.context.cities)
+
 
                         $("#District").empty();
                         $("#District").append('<option value="">select District</option>');
                                                  for (let x = 0 ; x < repo.length;x++){
-                         $('#District').append('<option value="'+repo[x].pk+'">'+repo[x].fields.name+'</option>');
+
+                         $('#District').append('<option value="'+ repo[x].council +'">'+ repo[x].council+'</option>');
                                             }
                     }
                 });
@@ -250,7 +253,7 @@ let repo;
                     success: function (data) {
 
                         var repo =JSON.parse(data.context.ward);
-
+                                   console.log(data.context.ward)
                         $("#ward").empty();
                         $("#ward").append('<option value="">select Ward</option>');
                                                  for (let x = 0 ; x < repo.length;x++){

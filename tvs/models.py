@@ -67,7 +67,7 @@ class Volunteer(models.Model):
     length = models.PositiveIntegerField(default=3, validators=[MinValueValidator(3), MaxValueValidator(12)])
     education = models.CharField(max_length=20, choices=CERT,default='None',null = True)
     school = models.CharField(max_length=100,blank=True,default='None')
-    ward = models.CharField(max_length=150,blank=True,default='Dar Es Salaam')
+    ward = models.CharField(max_length=150,blank=True)
     city1 = models.ForeignKey(Regions, on_delete=models.CASCADE, related_name='city', null=True)
     council1 = models.ForeignKey(Council, on_delete=models.CASCADE, related_name='council', null=True)
     ward1 = models.ForeignKey(Ward, on_delete=models.CASCADE, related_name='ward', null=True)
@@ -145,3 +145,12 @@ class Push(models.Model):
 class CancelledApplication(models.Model):
     name = models.CharField(max_length=100, null=True)
     canceling_reason = models.TextField()
+
+class test(models.Model):
+    region = models.CharField(max_length=400, null=True)
+    council = models.CharField(max_length=400, null=True)
+    ward =  models.CharField(max_length=400, null=True)
+    schoolname =  models.CharField(max_length=400, null=True)
+    enrolment =  models.CharField(max_length=400, null=True)
+    allteachers =  models.CharField(max_length=400, null=True)
+    ptr =  models.CharField(max_length=400, null=True)
