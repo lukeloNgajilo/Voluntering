@@ -1094,36 +1094,50 @@ def manage_applicant(request, education):
 
 def load_cities(request):
     country_id = request.POST['Region']
+    request.session['sregion'] = country_id
 
-    aa=test.objects.filter(region=country_id).order_by('council').values('council').distinct()
+    cities=[]
+    aa=test.objects.filter(region=country_id).values('council').order_by('council').distinct()
     cities=list(aa)
-    print(cities)
+
+
+   # response = str(list(aa))
     #cities = Council.objects.filter(Regions=country_id).order_by('name')
-    context={'cities': cities}
+    context={'cities': cities,
+                  'tap':len(aa)
+             }
     return HttpResponse(json.dumps({'context': context}), content_type="application/json")
 
 
 
 def load_ward(request):
     council_id = request.POST['District']
-    country_id = request.POST['Region']
-
+    country_id = request.session.get('sregion')
+    request.session['scouncil'] = council_id
+    ward = []
     bb=test.objects.filter(region=country_id,council=council_id).order_by('ward').values('ward').distinct()
+
     #ward = Ward.objects.filter(Council=council_id).order_by('name')
     ward = list(bb)
-    context={'ward': serializers.serialize('json', ward) }
+    context={'ward': ward,
+             'taps':len(bb)
+             }
     return HttpResponse(json.dumps({'context': context}), content_type="application/json")
 
 
 def load_school(request):
     ward_id = request.POST['Ward']
-    country_id = request.POST['Region']
-    regions = Regions.objects.all();
-    Ward.objects.filter(WardCode=ward_id)
-   # aa = test.objects.filter(region="" ward='Moshono')
-
-    school = School.objects.filter(ward=ward_id).order_by('name')
-    context = {'school': serializers.serialize('json', school)}
+    print(ward_id)
+    school = []
+    country_id = request.session.get('sregion')
+    council_id = request.session.get('scouncil')
+    cc = test.objects.filter(region=country_id, council=council_id ,ward=ward_id)
+    print(cc)
+    school=list(cc)
+    print(school)
+    context = {'school':  school,
+               'tapss':len(cc)
+               }
     return HttpResponse(json.dumps({'context': context}), content_type="application/json")
 
 

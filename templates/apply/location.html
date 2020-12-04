@@ -176,7 +176,7 @@ let repo;
                 var url = $("#location").attr("data-school-url");
                 $("#school").empty();
                 var WardId = $(this).val();
-
+                       console.log(WardId)
                 $.ajax({
                     type: "post",
                     headers: {"X-CSRFToken": '{{ csrf_token }}'},
@@ -187,12 +187,13 @@ let repo;
 
                     success: function (data) {
                               console.log(data.context.school)
-                        var repo =JSON.parse(data.context.school);
+                        repo=data.context.school;
+                     let ary=data.context.tapss;
 
                         $("#school").empty();
                         $("#school").append('<option value="">select School</option>');
-                                                 for (let x = 0 ; x < repo.length;x++){
-                         $('#school').append('<option value="'+repo[x].pk+'">'+repo[x].fields.name+'</option>');
+                                                 for (let x = 0 ; x < ary;x++){
+                         $('#school').append('<option value="'+repo[x].schoolname+'">'+repo[x].schoolname'</option>');
                                             }
                     }
                 });
@@ -218,16 +219,17 @@ let repo;
                     },
 
                     success: function (data) {
-
+  let arrayl;
                      {##   var repo =JSON.parse(data);#}
                         console.log(data.context.cities)
-
-
+                        arrayl=data.context.tap
+                      {#repo =JSON.parse(data.context.cities);#}
+                     repo =data.context.cities;
                         $("#District").empty();
                         $("#District").append('<option value="">select District</option>');
-                                                 for (let x = 0 ; x < repo.length;x++){
+                                                 for (let x = 0 ; x < arrayl ;x++){
 
-                         $('#District').append('<option value="'+ repo[x].council +'">'+ repo[x].council+'</option>');
+                         $('#District').append('<option value="'+ repo[x].council+'">'+ repo[x].council+'</option>');
                                             }
                     }
                 });
@@ -251,13 +253,16 @@ let repo;
                     },
 
                     success: function (data) {
+let arrayw;
+                        {#var repo =JSON.parse(data.context.ward);#}
 
-                        var repo =JSON.parse(data.context.ward);
-                                   console.log(data.context.ward)
+                                   console.log(data.context.taps)
+                            arrayw=data.context.taps;
+                                    repo =data.context.ward;
                         $("#ward").empty();
                         $("#ward").append('<option value="">select Ward</option>');
-                                                 for (let x = 0 ; x < repo.length;x++){
-                         $('#ward').append('<option value="'+repo[x].pk+'">'+repo[x].fields.name+'</option>');
+                                                 for (let x = 0 ; x < arrayw ;x++){
+                         $('#ward').append('<option value="'+repo[x].ward+'">'+repo[x].ward+'</option>');
                                             }
                     }
                 });
@@ -283,13 +288,14 @@ let repo;
                     },
 
                     success: function (data) {
-                              console.log(data.context.school)
-                        var repo =JSON.parse(data.context.school);
+     let ary;
+                              repo = data.context.school
+                        ary =data.context.tapps;
 
                         $("#school1").empty();
                         $("#school1").append('<option value="">select School</option>');
-                                                 for (let x = 0 ; x < repo.length;x++){
-                         $('#school1').append('<option value="'+repo[x].pk+'">'+repo[x].fields.name+'</option>');
+                                                 for (let x = 0 ; x < ary;x++){
+                         $('#school1').append('<option value="'+repo[x]+'">'+repo[x]+'</option>');
                                             }
                     }
                 });
