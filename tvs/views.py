@@ -335,9 +335,11 @@ def home(request, chartID='container', chart_type='column', chart_height=600):
 
 @login_required
 def cancelApplication(request):
+    sent_data={}
     user_name = request.user.username 
     if request.method == 'POST':
             messages.error(request,'Please Correct All Errors')
+
     else:
         form = Cancel()
         sent_data = {
