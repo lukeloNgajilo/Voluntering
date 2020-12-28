@@ -65,7 +65,7 @@
                                         <option value=""></option></select></div>
                     </div>
 
-  <div class="form-group row">
+                              <div class="form-group row">
                             <div class="col-3">
                                 <label><strong>Region<span style="color: red;"> *</span></strong></label>
                                 <select required class="form-control" id="Region1" name="Region1" >
@@ -363,8 +363,8 @@ let repo;
      let ary=data.context.tass;
                          repo =data.context.school;
                         $("#school1").empty();
-                        $("#schoo1").append('<option value="">select School</option>');
-                        $("#schoo1").append('<option value="">select School</option>');
+                        $("#school1").append('<option value="">select School</option>');
+                        $("#school1").append('<option value="">select School</option>');
                                                  for (let x = 0 ; x < ary ;x++) {
                                                      $('#school1').append('<option value="' + repo[x].schoolname + '">' + repo[x].schoolname + '</option>');
 
@@ -472,7 +472,8 @@ let aryy;
                          repo =data.context.school;
                             console.log(data.context.school);
                             aryy =data.context.tass;
-                            console.log(aryy)
+                            console.log(aryy
+                            )
                         $("#school2").empty();
                         $("#school2").append('<option value="">select School</option>');
                                                  for (let x = 0 ; x < aryy;x++){
