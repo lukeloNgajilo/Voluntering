@@ -1153,6 +1153,7 @@ def chooselocation(request):
 def savelocation(request):
 
     if request.method == 'POST':
+        username = request.user.username
         Wards = request.POST['Ward']
         School11 = request.POST['School13']
         School12 = request.POST['School11']
@@ -1181,8 +1182,8 @@ def savelocation(request):
         # ss =  School.objects.get(pk=School11)
         # ssc = School.objects.get(pk=School12)
         # sscw =School.objects.get(pk=School13)
-        cc = request.session.get('contacts')
-        Volunta=Volunteer.objects.get(contact=cc)
+       # cc = request.session.get('contacts')
+        Volunta=Volunteer.objects.get(username=username)
        # Voluntz=Volunta(city1=r1,city2=r2,city3=r3,council1=c1,council2=c2,council3=c3,
       #  ward1=w,ward2=w1,ward3=w2,School1=ss,School2=ssc,School3=sscw )
         Volunta.city1 = Region
