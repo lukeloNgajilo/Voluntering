@@ -1183,7 +1183,7 @@ def savelocation(request):
         Volunta=Volunteer.objects.get(contact=cc)
        # Voluntz=Volunta(city1=r1,city2=r2,city3=r3,council1=c1,council2=c2,council3=c3,
       #  ward1=w,ward2=w1,ward3=w2,School1=ss,School2=ssc,School3=sscw )
-        Volunta.city1 = r1
+        Volunta.city1 = Region
         Volunta.city2 = Region1
         Volunta.city3 = Region2
         Volunta.council1 = District
