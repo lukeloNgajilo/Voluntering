@@ -27,7 +27,7 @@ import json
 from django.core import serializers
 # Create your views here.
 
-loop = asyncio.get_event_loop()
+#loop = asyncio.get_event_loop()
 
 
 # class to check the highest ptr
@@ -1164,37 +1164,40 @@ def savelocation(request):
         Ward2 = request.POST['Ward2']
         District2 = request.POST['District2']
         Region2 = request.POST['Region2']
-        r1 = Regions.objects.get(RegionCode=Region)
-        r2 = Regions.objects.get(RegionCode=Region1)
-        r3 = Regions.objects.get(RegionCode=Region2)
-        c1= Council.objects.get(CouncilCode=District)
-        c2 = Council.objects.get(CouncilCode=District1)
-        c3 = Council.objects.get(CouncilCode=District2)
-        w  = Ward.objects.get(WardCode=Wards)
-        w1 = Ward.objects.get(WardCode=Ward1)
-        w2 = Ward.objects.get(WardCode=Ward2)
-        ss =  School.objects.get(pk=School11)
-        ssc = School.objects.get(pk=School12)
-        sscw =School.objects.get(pk=School13)
+        # r1 = test.objects.filter(region=Region)
+        # r1 = test.objects.filter(region=Region)
+        # r1 = test.objects.filter(region=Region)
+        # r1 = Regions.objects.get(RegionCode=Region)
+        # r2 = Regions.objects.get(RegionCode=Region1)
+        # r3 = Regions.objects.get(RegionCode=Region2)
+        # c1= Council.objects.get(CouncilCode=District)
+        # c2 = Council.objects.get(CouncilCode=District1)
+        # c3 = Council.objects.get(CouncilCode=District2)
+        # w  = Ward.objects.get(WardCode=Wards)
+        # w1 = Ward.objects.get(WardCode=Ward1)
+        # w2 = Ward.objects.get(WardCode=Ward2)
+        # ss =  School.objects.get(pk=School11)
+        # ssc = School.objects.get(pk=School12)
+        # sscw =School.objects.get(pk=School13)
         cc = request.session.get('contacts')
         Volunta=Volunteer.objects.get(contact=cc)
        # Voluntz=Volunta(city1=r1,city2=r2,city3=r3,council1=c1,council2=c2,council3=c3,
       #  ward1=w,ward2=w1,ward3=w2,School1=ss,School2=ssc,School3=sscw )
         Volunta.city1 = r1
-        Volunta.city2 = r2
-        Volunta.city3 = r3
-        Volunta.council1 = c1
-        Volunta.council2 =c2
-        Volunta.council3 =c3
-        Volunta.ward1 = w
-        Volunta.ward2 = w1
-        Volunta.ward3 = w2
-        Volunta.School1 = ss
-        Volunta.School2 = ssc
-        Volunta.School3 = sscw
+        Volunta.city2 = Region1
+        Volunta.city3 = Region2
+        Volunta.council1 = District
+        Volunta.council2 =District1
+        Volunta.council3 =District2
+        Volunta.ward1 = Wards
+        Volunta.ward2 = Ward1
+        Volunta.ward3 = Ward2
+        Volunta.School1 = School11
+        Volunta.School2 = School12
+        Volunta.School3 = School13
         Volunta.save()
-        max_ptr = Chart.objects.filter(ward=w)
-        print(max_ptr)
+      #  max_ptr = Chart.objects.filter(ward=w)
+       # print(max_ptr)
         #datum = Chart.objects.filter(ptr=max_ptr['ptr__max'])
         return redirect('status')
 
