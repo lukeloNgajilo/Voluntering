@@ -27,7 +27,7 @@ import json
 from django.core import serializers
 # Create your views here.
 
-#loop = asyncio.get_event_loop()
+loop = asyncio.get_event_loop()
 
 
 # class to check the highest ptr
@@ -1116,9 +1116,8 @@ def load_ward(request):
     request.session['scouncil'] = council_id
     ward = []
     bb=test.objects.filter(region=country_id,council=council_id).order_by('ward').values('ward').distinct()
-
-    #ward = Ward.objects.filter(Council=council_id).order_by('name')
     ward = list(bb)
+    
     context={'ward': ward,
              'taps':len(bb)
              }
