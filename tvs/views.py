@@ -548,7 +548,7 @@ def apply(request):
                     # not empty
                     instance = form.save(commit=False)
                     instance.username = name
-                    request.session['contacts'] =form.cleaned_data['contact']
+                   # request.session['contacts'] =form.cleaned_data['contact']
 
                     #request.session['aaabbb'] = contact
                  #   instance.location = region
@@ -1096,7 +1096,7 @@ def manage_applicant(request, education):
 
 def load_cities(request):
     country_id = request.POST['Region']
-    request.session['sregion'] = country_id
+   # request.session['sregion'] = country_id
 
     cities=[]
     aa=test.objects.filter(region=country_id).values('council').order_by('council').distinct()
