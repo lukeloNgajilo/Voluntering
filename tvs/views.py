@@ -1096,7 +1096,7 @@ def manage_applicant(request, education):
 
 def load_cities(request):
     country_id = request.POST['Region']
-   # request.session['sregion'] = country_id
+    request.session['sregion'] = country_id
 
     cities=[]
     aa=test.objects.filter(region=country_id).values('council').order_by('council').distinct()
@@ -1167,22 +1167,7 @@ def savelocation(request):
         Ward2 = request.POST['Ward2']
         District2 = request.POST['District2']
         Region2 = request.POST['Region2']
-        # r1 = test.objects.filter(region=Region)
-        # r1 = test.objects.filter(region=Region)
-        # r1 = test.objects.filter(region=Region)
-        # r1 = Regions.objects.get(RegionCode=Region)
-        # r2 = Regions.objects.get(RegionCode=Region1)
-        # r3 = Regions.objects.get(RegionCode=Region2)
-        # c1= Council.objects.get(CouncilCode=District)
-        # c2 = Council.objects.get(CouncilCode=District1)
-        # c3 = Council.objects.get(CouncilCode=District2)
-        # w  = Ward.objects.get(WardCode=Wards)
-        # w1 = Ward.objects.get(WardCode=Ward1)
-        # w2 = Ward.objects.get(WardCode=Ward2)
-        # ss =  School.objects.get(pk=School11)
-        # ssc = School.objects.get(pk=School12)
-        # sscw =School.objects.get(pk=School13)
-       # cc = request.session.get('contacts')
+
         Volunta=Volunteer.objects.get(username=username)
        # Voluntz=Volunta(city1=r1,city2=r2,city3=r3,council1=c1,council2=c2,council3=c3,
       #  ward1=w,ward2=w1,ward3=w2,School1=ss,School2=ssc,School3=sscw )
