@@ -16,7 +16,7 @@ SECRET_KEY = 'y3#r314%0doj(&6h6a)rzymvyx&73*q3$j()us76xb&)n$t6hn'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['teachervol.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
