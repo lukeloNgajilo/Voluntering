@@ -1160,7 +1160,10 @@ def savelocation(request):
         School13 = request.POST['School12']
         District= request.POST['District']
         Region = request.POST['Region']
-
+        cc = test.objects.filter(schoolname=School11).values('ptr')
+        cd = test.objects.filter(schoolname=School12).values('ptr')
+        ce = test.objects.filter(schoolname=School13).values('ptr')
+        print(cc)
         Ward1 = request.POST['Ward1']
         District1 = request.POST['District1']
         Region1 = request.POST['Region1']
@@ -1180,6 +1183,9 @@ def savelocation(request):
         Volunta.ward1 = Wards
         Volunta.ward2 = Ward1
         Volunta.ward3 = Ward2
+        Volunta.ptr1= cc
+        Volunta.ptr2 = cd
+        Volunta.ptr3 = ce
         Volunta.School1 = School11
         Volunta.School2 = School12
         Volunta.School3 = School13
