@@ -1,4 +1,9 @@
-amqp==2.5.2
+asgiref==3.3.1
+coloredlogs==15.0
+dj-database-url==0.5.0
+Django==3.1.7
+django-heroku==0.3.1
+djangoroku==0.1.2amqp==2.5.2
 anyjson==0.3.3
 asgiref==3.2.3
 attrs==19.3.0
@@ -64,3 +69,11 @@ webencodings==0.5.1
 whitenoise==5.0.1
 xhtml2pdf==0.2.4
 zipp==3.1.0
+
+gunicorn==20.0.4
+humanfriendly==9.1
+psycopg2==2.8.6
+psycopg2-binary==2.8.6
+pytz==2021.1
+sqlparse==0.4.1
+whitenoise==5.2.0
