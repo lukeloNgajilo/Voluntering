@@ -97,6 +97,7 @@ Provided Django & It's environment is installed in the system type in your termi
 - [x] UIX Revamping 
 - [x] Git optimization 
 - [x] Session Handling
+- [x] Deployment
 
 ## Remarks
 - Chrome Browser is recommended in Windows and All Browsers in both Mac & Ubuntu OS.
