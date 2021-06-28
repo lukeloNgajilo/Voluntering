@@ -120,9 +120,12 @@ Provided Django & It's environment is installed in the system type in your termi
 
 
 ## Author
-   **Hamisa Miraji @ 2019 - 2020**
+   **Hamisa Miraji @ 2019 - 2020**\
+   **Ngajilo lukelo @ 2020 - 2021**
    > UDSM Student - Bsc. In Computer Science 2017 - 2020
+   >  > UDSM Student - Bsc. In Computer Science 2020 - 2021
    > +255 714 189 035
+   >  > +255 788872074
 
 
 
